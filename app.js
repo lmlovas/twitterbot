@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const config = require('./config');
+const _ = require('lodash');
 
 var app = express();
 app.listen(8080);
@@ -20,8 +21,25 @@ var client = new Twitter({
   // auth = twitter.oauth.OAuth(access_token, access_token_secret, consumer_key, consumer_secret)
 });
 
-client.get('search/tweets', {q: 'iot'}, function(error, tweets, response) {
+// We are searching for tweets/posts about IoT
+// We are receiving a list of screen names from users that tweeted about IoT
+client.get('search/tweets', {q: 'IoT'}, function(error, tweets, response) {
   console.log(tweets);
+  _.forEach(tweets.statuses, (a) => {
+    console.log(a.user.screen_name);
+
+  })
+});
+
+// We are receiving real-time/livestream of tweets about IoT
+client.stream('statuses/filter', {track: 'IoT'},  function(stream) {
+  stream.on('data', function(tweet) {
+    console.log(tweet.text);
+  });
+
+  stream.on('error', function(error) {
+    console.log(error);
+  });
 });
 
 
