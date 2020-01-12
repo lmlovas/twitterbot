@@ -6,27 +6,32 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const config = require('./config');
 const _ = require('lodash');
 
+require('dotenv').config()
+
+//console.log(process.env);
+
+
 var app = express();
-app.listen(8080);
+//app.listen(8080);
 
 var Twitter = require('twitter');
-var client = new Twitter({
-  consumer_key:         'uLPRH2Te3U08BLhrikVxZ0pWs',
-  consumer_secret:      'nYcpPeyTAhKCojIFApnwHH27iH9jP9fbCvypCz07puZPsP5qEf',
-  access_token_key:         '1215302417761415170-2Jj0jHJMYFSbGFbR3C4rAuipFVzKnV',
-  access_token_secret:  'iQNNdLCbua57N8nyXKpx30o0VUGBRtnXHWYivaEzFW9GG',
-  // auth = twitter.oauth.OAuth(access_token, access_token_secret, consumer_key, consumer_secret)
+
+var client = new Twitter ({
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token_key: process.env.ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
+
 
 // We are searching for tweets/posts about IoT
 // We are receiving a list of screen names from users that tweeted about IoT
 client.get('search/tweets', {q: 'IoT'}, function(error, tweets, response) {
-  console.log(tweets);
+  console.log('Here are the most recent tweets on IoT:', tweets);
   _.forEach(tweets.statuses, (a) => {
-    console.log(a.user.screen_name);
+    console.log('Here is a list of the recent users that tweeted about IoT:', a.user.screen_name);
 
   })
 });
@@ -34,7 +39,7 @@ client.get('search/tweets', {q: 'IoT'}, function(error, tweets, response) {
 // We are receiving real-time/livestream of tweets about IoT
 client.stream('statuses/filter', {track: 'IoT'},  function(stream) {
   stream.on('data', function(tweet) {
-    console.log(tweet.text);
+    console.log('Here is the livestream/real-time tweets on IoT:', tweet.text);
   });
 
   stream.on('error', function(error) {
