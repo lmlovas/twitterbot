@@ -1,11 +1,9 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 const _ = require('lodash');
 
 require('dotenv').config()
@@ -13,12 +11,12 @@ require('dotenv').config()
 //console.log(process.env);
 
 
-var app = express();
+const app = express();
 //app.listen(8080);
 
-var Twitter = require('twitter');
+const Twitter = require('twitter');
 
-var client = new Twitter ({
+const client = new Twitter ({
   consumer_key: process.env.CONSUMER_KEY,
   consumer_secret: process.env.CONSUMER_SECRET,
   access_token_key: process.env.ACCESS_TOKEN_KEY,
