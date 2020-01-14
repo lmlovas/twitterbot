@@ -1,16 +1,15 @@
-const PORT = process.env.PORT || 3000;
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');const indexRouter = require('./routes/index');
+const logger = require('morgan');
+const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const _ = require('lodash');
 
 require('dotenv').config()
 
 //console.log(process.env);
-
 
 const app = express();
 //app.listen(8080);
