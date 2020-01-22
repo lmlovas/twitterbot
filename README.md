@@ -1,6 +1,3 @@
-# CGI
-:wave: CGI! This is my submission for the Code Challenge I received on 7.1.2020.
-
 ## Twitterbot
 
 ### Assumptions
